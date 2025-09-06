@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 3: Gentle Somatic Tracking & Provocative Testing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+            margin-bottom: 20px;
+        }
+        
+        .progress-tracker {
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .progress-tracker h3 {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        
+        .week-milestones {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .milestone-item {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .milestone-icon {
+            font-size: 1.8em;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .milestone-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .intro-section {
+            padding: 40px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .intro-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        .intro-section p {
+            line-height: 1.8;
+            color: #495057;
+            margin-bottom: 15px;
+        }
+        
+        .endo-reminder-box {
+            background: linear-gradient(135deg, #6bcf7f15, #6bcf7f30);
+            border: 2px solid #6bcf7f;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .endo-reminder-box h3 {
+            color: #2d7a3e;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .endo-reminder-box p {
+            color: #2d7a3e;
+            line-height: 1.6;
+        }
+        
+        .week-overview {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .week-overview h3 {
+            color: #764ba2;
+            margin-bottom: 15px;
+        }
+        
+        .week-overview ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .week-overview li {
+            padding: 8px 0;
+            color: #6c757d;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .week-overview li:before {
+            content: "→ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .warning-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .warning-box p {
+            color: #856404;
+            line-height: 1.6;
+        }
+        
+        .days-container {
+            padding: 40px;
+        }
+        
+        .day-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .day-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .day-title {
+            font-size: 1.5em;
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        .day-date {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+        
+        .day-theme {
+            background: linear-gradient(135deg, #667eea15, #764ba215);
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .day-theme h4 {
+            color: #495057;
+            margin-bottom: 5px;
+        }
+        
+        .education-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .education-section h4 {
+            color: #764ba2;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .education-section p {
+            line-height: 1.7;
+            color: #495057;
+            margin-bottom: 10px;
+        }
+        
+        .key-concept {
+            background: white;
+            padding: 15px;
+            border-left: 3px solid #ffd93d;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .exercises-section {
+            margin-top: 25px;
+        }
+        
+        .exercises-section h4 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+        
+        .exercise-item {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .exercise-time {
+            background: #667eea;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        
+        .exercise-title {
+            font-weight: 600;
+            color: #495057;
+            font-size: 1.1em;
+        }
+        
+        .exercise-content {
+            color: #6c757d;
+            line-height: 1.6;
+        }
+        
+        .provocative-box {
+            background: linear-gradient(135deg, #ffe0ec, #ffd4e1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 2px solid #ff6b9d;
+        }
+        
+        .provocative-box h5 {
+            color: #c92a5d;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .provocative-box p {
+            color: #8e2045;
+            margin: 10px 0;
+        }
+        
+        .ifs-dialogue-box {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 2px solid #2196f3;
+        }
+        
+        .ifs-dialogue-box h5 {
+            color: #1565c0;
+            margin-bottom: 15px;
+        }
+        
+        .ifs-dialogue-box .question {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 3px solid #2196f3;
+        }
+        
+        .emotional-trigger-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        .emotional-trigger-table th {
+            background: #764ba2;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        .emotional-trigger-table td {
+            padding: 10px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .emotional-trigger-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .timeline-exercise {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px dashed #667eea;
+            margin: 15px 0;
+        }
+        
+        .timeline-exercise h5 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .timeline-step {
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 3px solid #667eea;
+            background: #f8f9fa;
+        }
+        
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .checkbox-wrapper input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .checkbox-wrapper label {
+            cursor: pointer;
+            color: #6c757d;
+            user-select: none;
+        }
+        
+        .special-note {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .special-note h5 {
+            color: #856404;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .special-note p {
+            color: #856404;
+            line-height: 1.6;
+        }
+        
+        .success-story-box {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .success-story-box h5 {
+            color: #155724;
+            margin-bottom: 10px;
+        }
+        
+        .success-story-box p {
+            color: #155724;
+            font-style: italic;
+        }
+        
+        .completed-day {
+            opacity: 0.7;
+            background: #f0f9ff;
+        }
+        
+        .completed-day .day-title {
+            text-decoration: line-through;
+        }
+        
+        @media (max-width: 768px) {
+            .week-milestones {
+                flex-direction: column;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .container {
+                border-radius: 0;
+            }
+            
+            body {
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Week 3: Active Neural Circuit Retraining</h1>
+            <div class="subtitle">Approaching Your Target Area with Confidence</div>
+            
+            <div class="progress-tracker">
+                <h3>Week 3 Major Milestones</h3>
+                <div class="week-milestones">
+                    <div class="milestone-item">
+                        <span class="milestone-icon">🎯</span>
+                        <span class="milestone-label">First Pelvic Tracking</span>
+                    </div>
+                    <div class="milestone-item">
+                        <span class="milestone-icon">🧠</span>
+                        <span class="milestone-label">Provocative Testing</span>
+                    </div>
+                    <div class="milestone-item">
+                        <span class="milestone-icon">💭</span>
+                        <span class="milestone-label">Dialogue with Pain</span>
+                    </div>
+                    <div class="milestone-item">
+                        <span class="milestone-icon">🎭</span>
+                        <span class="milestone-label">Emotional Triggers</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="intro-section">
+            <h2>Welcome to Week 3: The Breakthrough Week</h2>
+            <p>You've built your foundation. You understand how your brain creates pain. You can observe sensations without immediate fear. Now we're ready for the breakthrough work: gently approaching your pelvic area with all your new skills, and proving through provocative testing that your brain generates many of your symptoms.</p>
+            
+            <div class="endo-reminder-box">
+                <h3>🌱 Your Endo Reality Check</h3>
+                <p><strong>Remember: You have endometriosis AND your nervous system is amplifying it.</strong></p>
+                <p>Think of it this way: If endo is a match causing a small flame, your nervous system has turned it into a bonfire. We're not denying the match exists - we're working on controlling the bonfire. Even reducing amplification by 50% would transform your daily life.</p>
+                <p style="margin-top: 10px;"><em>Other women with endo have vastly different pain levels. The difference? Neural amplification. You can dial yours down.</em></p>
+            </div>
+            
+            <div class="week-overview">
+                <h3>🎯 This Week's Breakthrough Goals</h3>
+                <ul>
+                    <li>Gentle somatic tracking of actual pelvic sensations (60 seconds at a time)</li>
+                    <li>Prove your brain creates symptoms through imagination (provocative testing)</li>
+                    <li>Identify which emotions instantly trigger pelvic tension</li>
+                    <li>Have a conversation with your pain to understand its protective role</li>
+                    <li>Begin tiny exposures to feared activities</li>
+                    <li>Map your life timeline to understand when/why pain began</li>
+                </ul>
+            </div>
+            
+            <div class="warning-box">
+                <h4>⚠️ Week 3 Safety Rules</h4>
+                <p><strong>1.</strong> Never force through severe pain - work only at the edges of comfort</p>
+                <p><strong>2.</strong> If panic arises during pelvic tracking, immediately return to hands/feet</p>
+                <p><strong>3.</strong> Success is measured by doing the exercise, NOT by being symptom-free</p>
+                <p><strong>4.</strong> Setbacks are your brain testing new patterns - they're temporary and normal</p>
+            </div>
+        </div>
+        
+        <div class="days-container">
+            <!-- Day 15 -->
+            <div class="day-card" id="day15">
+                <div class="day-header">
+                    <span class="day-title">Day 15: First Real Pelvic Tracking + Life Timeline</span>
+                    <span class="day-date">Week 3, Day 1</span>
+                </div>
+                
+                <div class="day-theme">
+                    <h4>Today's Focus: Brave First Steps & Understanding Origins</h4>
+                    <p>Gently approaching your target area while mapping when/why pain began.</p>
+                </div>
+                
+                <div class="education-section">
+                    <h4>📚 Why Timeline Matters</h4>
+                    <p>Your brain didn't randomly decide to create pain. It learned to protect you during a specific time of threat or overwhelm. By identifying when pain started and what was happening in your life, you see the pattern: emotional danger → brain creates physical protection.</p>
+                    
+                    <div class="key-concept">
+                        <strong>Common Pattern:</strong> "My pelvic pain started 6 months after my divorce/mom got sick/I took on caregiving/work became unbearable." The delay is normal - your brain held on as long as it could before creating a physical outlet for emotional overwhelm.
+                    </div>
+                </div>
+                
+                <div class="exercises-section">
+                    <h4>Today's Exercises</h4>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-header">
+                            <span class="exercise-title">Morning Life Timeline Creation</span>
+                            <span class="exercise-time">15 min</span>
+                        </div>
+                        <div class="exercise-content">
+                            <div class="timeline-exercise">
+                                <h5>Map Your Pain Origins</h5>
+                                
+                                <div class="timeline-step">
+                                    <strong>Step 1:</strong> When did pelvic pain first start? (Month/Year): _______
+                                </div>
+                                
+                                <div class="timeline-step">
+                                    <strong>Step 2:</strong> What was happening in your life 6-12 months BEFORE pain started?
+                                    <ul style="margin-top: 5px;">
+                                        <li>Relationship stress?</li>
+                                        <li>Work pressure?</li>
+                                        <li>Family illness/caregiving?</li>
+                                        <li>Financial stress?</li>
+                                        <li>Loss or grief?</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="timeline-step">
+                                    <strong>Step 3:</strong> What emotions were you NOT able to express then?
+                                    <ul style="margin-top: 5px;">
+                                        <li>Anger you had to swallow?</li>
+                                        <li>Sadness you couldn't show?</li>
+                                        <li>Fear you had to hide?</li>
+                                        <li>Needs you couldn't voice?</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="timeline-step">
+                                    <strong>Step 4:</strong> Write this connection: "My brain learned to create pelvic pain when _______ because I couldn't _______, so my body expressed it for me."
+                                </div>
+                            </div>
+                            
+                            <p style="margin-top: 15px;"><strong>Total evidence count: ___/13</strong></p>
+                            <p>Each check mark is proof your brain can change!</p>
+                            
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="day21-evidence">
+                                <label for="day21-evidence">Compiled complete evidence file</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-header">
+                            <span class="exercise-title">Your Pain Origin Story</span>
+                            <span class="exercise-time">20 min</span>
+                        </div>
+                        <div class="exercise-content">
+                            <p><strong>Write a 1-page story: "How My Brain Learned to Protect Me with Pain"</strong></p>
+                            
+                            <p>Include:</p>
+                            <ul>
+                                <li>What was happening when pain started (from your timeline)</li>
+                                <li>What emotions you couldn't express</li>
+                                <li>How pain "helped" by giving you a reason to stop/rest/say no</li>
+                                <li>What your pain has been protecting you from (from dialogue)</li>
+                                <li>Why your brain chose the pelvis (center of vulnerability/power)</li>
+                                <li>How emotional triggers maintain the pattern</li>
+                            </ul>
+                            
+                            <p style="margin-top: 15px;"><strong>End with:</strong> "I understand now why my brain created this protection. I'm grateful it tried to help. Now I'm teaching it that I'm safe and can handle life without this level of pain."</p>
+                            
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="day21-story">
+                                <label for="day21-story">Wrote my pain origin story</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-header">
+                            <span class="exercise-title">Week 3 Victories & Next Steps</span>
+                            <span class="exercise-time">15 min</span>
+                        </div>
+                        <div class="exercise-content">
+                            <p><strong>Celebrate these breakthroughs:</strong></p>
+                            
+                            <ul>
+                                <li>✓ You did somatic tracking on your actual pelvic area!</li>
+                                <li>✓ You proved imagination creates symptoms!</li>
+                                <li>✓ You identified emotional triggers!</li>
+                                <li>✓ You talked to your pain and learned its purpose!</li>
+                                <li>✓ You did a physical exposure!</li>
+                                <li>✓ You're separating endo from amplification!</li>
+                            </ul>
+                            
+                            <p style="margin-top: 15px;"><strong>Rate yourself:</strong></p>
+                            <ul>
+                                <li>Fear of pain now (1-10) vs Week 1: ___</li>
+                                <li>Belief pain is neuroplastic (0-100%): ___%</li>
+                                <li>Confidence you can improve (0-100%): ___%</li>
+                            </ul>
+                            
+                            <p style="margin-top: 15px;"><strong>Next week preview:</strong> You'll continue graded exposure, adding 30 seconds each day. You'll practice provocative testing on harder triggers. You'll write unsent letters to release trapped emotions.</p>
+                            
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="day21-victories">
+                                <label for="day21-victories">Celebrated victories and set intentions</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-header">
+                            <span class="exercise-title">Final Endo Reality Check</span>
+                            <span class="exercise-time">10 min</span>
+                        </div>
+                        <div class="exercise-content">
+                            <div class="endo-reminder-box">
+                                <h3>Your Dual Reality Moving Forward</h3>
+                                
+                                <p><strong>Write these truths:</strong></p>
+                                <ul>
+                                    <li>"I have endometriosis that needs medical management AND I can reduce neural amplification"</li>
+                                    <li>"Some of my pain is structural AND much of it is my brain protecting me"</li>
+                                    <li>"I can honor both realities without contradiction"</li>
+                                    <li>"Reducing amplification from 12 to 6 would give me my life back"</li>
+                                    <li>"I don't need to be pain-free to be functional and happy"</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="day21-endo">
+                                <label for="day21-endo">Integrated dual reality understanding</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="success-story-box">
+                    <h5>🌟 WEEK 3 COMPLETE - YOU'RE TRANSFORMING!</h5>
+                    <p>You've done the hardest work - approaching feared sensations with curiosity, proving your brain's role, and taking first brave steps. The path ahead is just repetition and gradual expansion. You have all the tools. Your brain is already changing. Keep going - your life is waiting on the other side of this fear!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Save progress to localStorage
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            // Load saved state
+            const saved = localStorage.getItem(checkbox.id);
+            if (saved === 'true') {
+                checkbox.checked = true;
+            }
+            
+            // Save state on change
+            checkbox.addEventListener('change', function() {
+                localStorage.setItem(this.id, this.checked);
+                
+                // Check if day is complete
+                checkDayCompletion();
+            });
+        });
+        
+        function checkDayCompletion() {
+            document.querySelectorAll('.day-card').forEach(dayCard => {
+                const checkboxes = dayCard.querySelectorAll('input[type="checkbox"]');
+                const checkedBoxes = dayCard.querySelectorAll('input[type="checkbox"]:checked');
+                
+                // Don't count checkboxes that are part of exercises (like emotional triggers)
+                const exerciseCheckboxes = dayCard.querySelectorAll('.emotional-trigger-table input[type="checkbox"], #alert-rush, #alert-schedule, #alert-scan, #alert-phone, #alert-yes, #alert-trapped, #alert-perfect');
+                const mainCheckboxes = Array.from(checkboxes).filter(cb => !Array.from(exerciseCheckboxes).includes(cb));
+                const mainChecked = Array.from(checkedBoxes).filter(cb => !Array.from(exerciseCheckboxes).includes(cb));
+                
+                if (mainCheckboxes.length > 0 && mainCheckboxes.length === mainChecked.length) {
+                    dayCard.classList.add('completed-day');
+                } else {
+                    dayCard.classList.remove('completed-day');
+                }
+            });
+        }
+        
+        // Check completion on load
+        checkDayCompletion();
+    </script>
+</body>
+</html>            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="day15-timeline">
+                                <label for="day15-timeline">Completed pain origin timeline</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-header">
+                            <span class="exercise-title">First Real Pelvic Somatic Tracking</span>
+                            <span class="exercise-time">10 min</span>
+                        </div>
+                        <div class="exercise-content">
+                            <p><strong>The moment you've been building toward - you're ready!</strong></p>
+                            
+                            <div class="provocative-box" style="background: linear-gradient(135deg, #e8f4f8, #d1ecf1); border-color: #17a2b8;">
+                                <h5 style="color: #0c5460;">Your First Pelvic Tracking Session</h5>
+                                
+                                <p><strong>Preparation (2 min):</strong></p>
+                                <ul>
+                                    <li>Sit or lie comfortably</li>
+                                    <li>Hand on heart: "I am safe"</li>
+                                    <li>3 deep breaths</li>
+                                    <li>Remember: Sensations can't hurt you</li>
+                                </ul>
+                                
+                                <p style="margin-top: 15px;"><strong>Warm-up (2 min):</strong></p>
+                                <ul>
+                                    <li>Track hands for 30 seconds (safe zone)</li>
+                                    <li>Track shoulders for 30 seconds</li>
+                                    <li>Track lower back for 30 seconds</li>
+                                    <li>Track hips for 30 seconds</li>
+                                </ul>
+                                
+                                <p style="margin-top: 15px;"><strong>The Main Event (60 seconds only!):</strong></p>
+                                <ul>
+                                    <li>Bring gentle awareness to pelvic area</li>
+                                    <li>Whatever you notice: "Hello, I see you"</li>
+                                    <li>Rate intensity 1-10</li>
+                                    <li>Observe: Is it moving? Pulsing? Changing?</li>
+                                    <li>Add lightness: "You're working so hard to protect me"</li>
+                                    <li>After 60 seconds, return to hands</li>
+                                </ul>
+                                
+                                <p style="margin-top: 15px;"><strong>Cool-down (2 min):</strong></p>
+                                <ul>
+                                    <li>Return to tracking hands</li>
+                                    <li>3 deep breaths</li>
+                                    <li>Say: "I did it. I observed without catastrophe."</li>
+                                    <li>This is a HUGE victory!</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="day15-pelvic">
+                                <label for="day15-pelvic">Completed first pelvic somatic tracking!</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-header">
+                            <span class="exercise-title">Evening Endo Affirmation</span>
+                            <span class="exercise-time">5 min</span>
+                        </div>
+                        <div class="exercise-content">
+                            <p>Write in your journal:</p>
+                            <ul>
+                                <li>"I have endometriosis AND my nervous system amplifies it"</li>
+                                <li>"The endo might be a 3, but my brain makes it a 12"</li>
+                                <li>"I can reduce the amplification while still treating the condition"</li>
+                                <li>"Even 50% less amplification would change my life"</li>
+                                <li>"Today I proved I can observe pelvic sensations safely"</li>
+                            </ul>
+                            
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="day15-affirmation">
+                                <label for="day15-affirmation">Wrote endo reality affirmations</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="special-note">
+                    <h5>🎉 HUGE Milestone!</h5>
+                    <p>You just did somatic tracking on your actual pelvic area! Even 60 seconds is massive progress. Your brain is learning: "We can pay attention here without danger."</p>
+                </div>
+            </div>
+            
+            <!-- Day 16 -->
+            <div class="day-card" id="day16">
+                <div class="day-header">
+                    <span class="day-title">Day 16: Emotional Trigger Mapping</span>
+                    <span class="day-date">Week 3, Day 2</span>
+                </div>
+                
+                <div class="day-theme">
+                    <h4>Today's Focus: Which Emotions Instantly Create Pelvic Tension?</h4>
+                    <p>Discovering your unique emotion-to-pain patterns.</p>
+                </div>
+                
+                <div class="education-section">
+                    <h4>📚 Emotions Land in the Pelvis</h4>
+                    <p>The pelvis is particularly vulnerable to emotional tension because it's our center of vulnerability, sexuality, and creativity. Unexpressed anger, sexual shame, fear of violation, and feelings of powerlessness often manifest as pelvic pain. This isn't psychological - it's neurological. Emotions instantly become muscle tension.</p>
+                    
+                    <div class="key-concept">
+                        <strong>Research Fact:</strong> The same brain regions activate for emotional pain and physical pain. When you feel emotionally "hurt," your brain can express it as literal hurting in your pelvis.
+                    </div>
+                </div>
+                
+                <div class="exercises-section">
+                    <h4>Today's Exercises</h4>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-header">
+                            <span class="exercise-title">Morning Emotional Trigger Detective Work</span>
+                            <span class="exercise-time">20 min</span>
+                        </div>
+                        <div class="exercise-content">
+                            <p><strong>Identify which emotional states trigger your pelvic pain/tension:</strong></p>
+                            
+                            <table class="emotional-trigger-table">
+                                <tr>
+                                    <th>Emotional Trigger</th>
+                                    <th>Check if Yes</th>
+                                    <th>Pelvic Response</th>
+                                </tr>
+                                <tr>
+                                    <td>After arguments/conflict</td>
+                                    <td>□</td>
+                                    <td>Immediate? Delayed? How long?</td>
+                                </tr>
+                                <tr>
+                                    <td>When I can't express anger</td>
+                                    <td>□</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Feeling trapped/obligated</td>
+                                    <td>□</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Before difficult conversations</td>
+                                    <td>□</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Around certain family members</td>
+                                    <td>□</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>When saying yes but meaning no</td>
+                                    <td>□</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Sexual pressure/expectations</td>
+                                    <td>□</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Work stress/deadlines</td>
+                                    <td>□</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Feeling criticized/judged</td>
+                                    <td>□</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Caretaking others</td>
+                                    <td>□</td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                            
+                            <p style="margin-top: 15px;"><strong>Key Insight to Write:</strong> "My top 3 emotional triggers are _____, _____, and _____. When these happen, my pelvis tightens within ___ minutes/hours."</p>
+                            
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="day16-triggers">
+                                <label for="day16-triggers">Identified my emotional triggers</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-header">
+                            <span class="exercise-title">Live Emotion-Pelvis Connection Test</span>
+                            <span class="exercise-time">10 min</span>
+                        </div>
+                        <div class="exercise-content">
+                            <p><strong>Proof that emotions instantly affect your pelvis:</strong></p>
+                            
+                            <ol>
+                                <li><strong>Baseline:</strong> Notice current pelvic sensation (rate 1-10)</li>
+                                <li style="margin-top: 10px;"><strong>Think of a safe, happy memory</strong>
+                                    <br>→ Notice: How does pelvis respond differently?</li>
+                                <li style="margin-top: 10px;"><strong>Think of an obligation you resent</strong>
+                                    <br>→ Notice: Instant pelvic change?</li>
+                            </ol>
+                            
+                            <p style="margin-top: 15px;"><strong>Write your discovery:</strong> "Within ___ seconds of thinking about [trigger], my pelvis _____. This proves emotions instantly become physical sensations."</p>
+                            
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="day16-connection">
+                                <label for="day16-connection">Completed emotion-pelvis test</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-header">
+                            <span class="exercise-title">Somatic Tracking with Emotional Awareness</span>
+                            <span class="exercise-time">10 min</span>
+                        </div>
+                        <div class="exercise-content">
+                            <p><strong>Track your pelvis while noticing emotional state:</strong></p>
+                            
+                            <ol>
+                                <li>First, identify current emotion: "Right now I feel ___"</li>
+                                <li>Now track pelvic sensations for 60 seconds</li>
+                                <li>Notice: Is there a connection between the emotion and sensation?</li>
+                                <li>Say: "This sensation might be my body expressing [emotion]"</li>
+                                <li>Send compassion: "Thank you, pelvis, for holding this for me"</li>
+                            </ol>
+                            
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="day16-tracking">
+                                <label for="day16-tracking">Completed emotional somatic tracking</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Day 17 -->
+            <div class="day-card" id="day17">
+                <div class="day-header">
+                    <span class="day-title">Day 17: Introduction to Provocative Testing</span>
+                    <span class="day-date">Week 3, Day 3</span>
+                </div>
+                
+                <div class="day-theme">
+                    <h4>Today's Focus: Proving Your Brain Creates Symptoms from Imagination</h4>
+                    <p>The most powerful evidence that pain is neuroplastic.</p>
+                </div>
+                
+                <div class="education-section">
+                    <h4>📚 The Magic of Provocative Testing</h4>
+                    <p>If simply IMAGINING an activity creates symptoms, that's 100% proof your brain is generating them. Structural damage can't be triggered by imagination. This isn't "all in your head" - your brain creates real physical symptoms. But if imagination can create them, retraining can stop them.</p>
+                    
+                    <div class="key-concept">
+                        <strong>The Proof:</strong> A patient imagined pressing on a tender spot and pain increased. When asked to imagine pressing with joy and safety, the pain disappeared. The tender spot hadn't changed - only the brain's interpretation changed.
+                    </div>
+                </div>
+                
+                <div class="exercises-section">
+                    <h4>Today's Exercises</h4>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-header">
+                            <span class="exercise-title">Morning Provocative Testing Session</span>
+                            <span class="exercise-time">15 min</span>
+                        </div>
+                        <div class="exercise-content">
+                            <div class="provocative-box">
+                                <h5>Your First Provocative Test</h5>
+                                
+                                <p><strong>Choose your LEAST scary trigger to imagine (not your worst!):</strong></p>
+                                <ul>
+                                    <li>Sitting for 30 minutes</li>
+                                    <li>Walking a block</li>
+                                    <li>Having sex</li>
+                                    <li>Bending over</li>
+                                    <li>Exercise</li>
+                                </ul>
+                                
+                                <p style="margin-top: 15px;"><strong>Step 1: Baseline (1 min)</strong></p>
+                                <p>Rate current pelvic sensation: ___/10</p>
+                                
+                                <p style="margin-top: 15px;"><strong>Step 2: Imagine with Fear (2 min)</strong></p>
+                                <p>Close eyes. Vividly imagine doing the trigger activity. Imagine it going badly, causing pain. Notice: Do symptoms increase? Where? How much?</p>
+                                
+                                <p style="margin-top: 15px;"><strong>Step 3: The Key Realization (1 min)</strong></p>
+                                <p>If symptoms increased: "My brain just created symptoms from imagination alone! This is neuroplastic!"</p>
+                                
+                                <p style="margin-top: 15px;"><strong>Step 4: Calm the System (2 min)</strong></p>
+                                <ul>
+                                    <li>"I'm safe, this is just my brain protecting me"</li>
+                                    <li>"These sensations can't hurt me"</li>
+                                    <li>Track symptoms with curiosity until they reduce</li>
+                                </ul>
+                                
+                                <p style="margin-top: 15px;"><strong>Step 5: Imagine with Joy (2 min)</strong></p>
+                                <p>Now imagine the SAME activity but with confidence, ease, and joy. See yourself doing it perfectly comfortably. Notice: Symptoms different?</p>
+                            </div>
+                            
+                            <p style="margin-top: 15px;"><strong>Journal Discovery:</strong> "Imagining [activity] with fear created ___. Imagining with joy created ___. This proves my brain controls these sensations."</p>
+                            
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="day17-provocative">
+                                <label for="day17-provocative">Completed provocative testing!</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-header">
+                            <span class="exercise-title">Endo Reality Integration</span>
+                            <span class="exercise-time">10 min</span>
+                        </div>
+                        <div class="exercise-content">
+                            <p><strong>Write about this dual reality:</strong></p>
+                            
+                            <div style="background: #f0f8ff; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                                <p>"I have endometriosis that creates some legitimate inflammation and tissue irritation. AND my brain is amplifying these signals by 300-400% because it thinks I'm in danger."</p>
+                                
+                                <p style="margin-top: 10px;">"When I imagined [activity], my brain created symptoms instantly. The endo didn't suddenly get worse in those 2 minutes - my brain created the increase."</p>
+                                
+                                <p style="margin-top: 10px;">"This means I can have endo AND reduce my pain significantly by teaching my brain we're safe."</p>
+                            </div>
+                            
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="day17-integration">
+                                <label for="day17-integration">Wrote endo reality integration</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-header">
+                            <span class="exercise-title">Evening Success Story</span>
+                            <span class="exercise-time">10 min</span>
+                        </div>
+                        <div class="exercise-content">
+                            <div class="success-story-box">
+                                <h5>Real Patient Success</h5>
+                                <p>"I had stage 4 endo and adenomyosis. My pain was a constant 8-9. Through this work, I got it down to a 2-3. Yes, I still have endo. But my life is completely different. I can work, exercise, have sex, travel. The endo is still there but my brain stopped amplifying it into agony." - Sarah, 34</p>
+                            </div>
+                            
+                            <p>Write: "If Sarah could reduce her amplification with stage 4 endo, I can reduce mine too."</p>
+                            
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="day17-story">
+                                <label for="day17-story">Read success story and wrote affirmation</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="special-note">
+                    <h5>🧠 Mind-Blowing Discovery!</h5>
+                    <p>You just proved your brain creates symptoms from imagination! This is the most powerful evidence that your pain is neuroplastic and changeable. If thoughts can create it, new thoughts can stop it.</p>
+                </div>
+            </div>
+            
+            <!-- Day 18 -->
+            <div class="day-card" id="day18">
+                <div class="day-header">
+                    <span class="day-title">Day 18: Dialogue with Pain as Protector</span>
+                    <span class="day-date">Week 3, Day 4</span>
+                </div>
+                
+                <div class="day-theme">
+                    <h4>Today's Focus: Understanding What Your Pain is Protecting You From</h4>
+                    <p>Having a compassionate conversation with your symptoms.</p>
+                </div>
+                
+                <div class="education-section">
+                    <h4>📚 Your Pain is Not Your Enemy</h4>
+                    <p>Your pain is like an overprotective bodyguard who thinks you're constantly in danger. It showed up during a difficult time to protect you from emotional overwhelm. By talking to it with curiosity rather than hatred, you can understand its purpose and negotiate a new relationship.</p>
+                    
+                    <div class="key-concept">
+                        <strong>IFS Principle:</strong> Every symptom is a "part" trying to help you. When you understand what it's protecting you from, you can address the real issue and the protection (pain) becomes unnecessary.
+                    </div>
+                </div>
+                
+                <div class="exercises-section">
+                    <h4>Today's Exercises</h4>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-header">
+                            <span class="exercise-title">Morning Dialogue with Your Pelvic Pain</span>
+                            <span class="exercise-time">20 min</span>
+                        </div>
+                        <div class="exercise-content">
+                            <div class="ifs-dialogue-box">
+                                <h5>Conversation with Your Pain</h5>
+                                
+                                <p><strong>Preparation:</strong> Get comfortable, hand on pelvis, breathe deeply</p>
+                                
+                                <div class="question">
+                                    <p><strong>You:</strong> "Hello, pelvic pain. I know you're trying to help me. What are you protecting me from?"</p>
+                                    <p><em>Listen for the answer - it might be: from feeling emotions, from sexual vulnerability, from saying no, from others' demands...</em></p>
+                                </div>
+                                
+                                <div class="question">
+                                    <p><strong>You:</strong> "When did you first arrive to protect me?"</p>
+                                    <p><em>Often connects to your timeline from Day 15 - during divorce, illness, overwhelming responsibility...</em></p>
+                                </div>
+                                
+                                <div class="question">
+                                    <p><strong>You:</strong> "What are you afraid would happen if you weren't so loud?"</p>
+                                    <p><em>Listen - might be: you'd ignore your needs, you'd be vulnerable, you'd have to face difficult emotions...</em></p>
+                                </div>
+                                
+                                <div class="question">
+                                    <p><strong>You:</strong> "I appreciate you trying to protect me. What if we found a gentler way? What would you need to feel safe turning down the volume?"</p>
+                                    <p><em>This opens negotiation - maybe it needs you to set boundaries, express anger, take breaks...</em></p>
+                                </div>
+                                
+                                <div class="question">
+                                    <p><strong>You:</strong> "Thank you for talking with me. I'm listening now. We can work together."</p>
+                                </div>
+                            </div>
+                            
+                            <p style="margin-top: 15px;"><strong>Journal what you discovered:</strong> "My pain is protecting me from ___. It first arrived when ___. It needs ___ to feel safe reducing intensity."</p>
+                            
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="day18-dialogue">
+                                <label for="day18-dialogue">Completed dialogue with pain</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-header">
+                            <span class="exercise-title">Provocative Testing Round 2</span>
+                            <span class="exercise-time">10 min</span>
+                        </div>
+                        <div class="exercise-content">
+                            <p><strong>Today, test a different trigger:</strong></p>
+                            
+                            <ol>
+                                <li>Pick second-least scary trigger</li>
+                                <li>Imagine with fear - note symptoms</li>
+                                <li>Recognize: "Brain is creating this!"</li>
+                                <li>Calm with safety messages</li>
+                                <li>Imagine with joy - note difference</li>
+                            </ol>
+                            
+                            <p><strong>Key Addition Today:</strong> After imagining with joy, say to your pain: "See? We can do this activity safely. You don't need to protect me from this."</p>
+                            
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="day18-testing">
+                                <label for="day18-testing">Completed second provocative test</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-header">
+                            <span class="exercise-title">Emotional Trigger in Action</span>
+                            <span class="exercise-time">Throughout day</span>
+                        </div>
+                        <div class="exercise-content">
+                            <p><strong>When you encounter one of your emotional triggers today:</strong></p>
+                            
+                            <ol>
+                                <li>Notice immediately: "Trigger happening - [person/situation]"</li>
+                                <li>Check pelvis: "Starting to tighten"</li>
+                                <li>Name it: "My pelvis is expressing [anger/fear/resentment] for me"</li>
+                                <li>Thank it: "Thank you pelvis, I see what you're doing"</li>
+                                <li>Redirect: "I can handle this emotion without physical pain"</li>
+                            </ol>
+                            
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="day18-trigger">
+                                <label for="day18-trigger">Caught an emotional trigger in action</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Day 19 -->
+            <div class="day-card" id="day19">
+                <div class="day-header">
+                    <span class="day-title">Day 19: Graded Imaginal Exposure</span>
+                    <span class="day-date">Week 3, Day 5</span>
+                </div>
+                
+                <div class="day-theme">
+                    <h4>Today's Focus: Systematic Desensitization Through Imagination</h4>
+                    <p>Retraining your brain one image at a time.</p>
+                </div>
+                
+                <div class="education-section">
+                    <h4>📚 Why Imagination First?</h4>
+                    <p>Your brain can't tell the difference between vividly imagined and real experiences. By repeatedly imagining triggers with safety and joy, you're literally rewiring the neural pathways before attempting physical exposure. It's like a flight simulator for your nervous system.</p>
+                    
+                    <div class="key-concept">
+                        <strong>The 50% Rule:</strong> Even if you only reduce pain amplification by 50%, that could mean going from an 8 to a 4 - from disabled to functional. Don't aim for perfection, aim for improvement.
+                    </div>
+                </div>
+                
+                <div class="exercises-section">
+                    <h4>Today's Exercises</h4>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-header">
+                            <span class="exercise-title">Creating Your Exposure Ladder</span>
+                            <span class="exercise-time">15 min</span>
+                        </div>
+                        <div class="exercise-content">
+                            <p><strong>List activities from least to most scary (1-10 fear rating):</strong></p>
+                            
+                            <ol>
+                                <li>_________________________________ Fear: __/10</li>
+                                <li>_________________________________ Fear: __/10</li>
+                                <li>_________________________________ Fear: __/10</li>
+                                <li>_________________________________ Fear: __/10</li>
+                                <li>_________________________________ Fear: __/10</li>
+                            </ol>
+                            
+                            <p style="margin-top: 15px;"><strong>Today's Rule:</strong> Only work with activities rated 5 or below. Save the scary ones for later weeks.</p>
+                            
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="day19-ladder">
+                                <label for="day19-ladder">Created my exposure ladder</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-header">
+                            <span class="exercise-title">Systematic Imaginal Exposure</span>
+                            <span class="exercise-time">20 min</span>
+                        </div>
+                        <div class="exercise-content">
+                            <p><strong>Work with your least scary trigger (bottom of ladder):</strong></p>
+                            
+                            <div class="provocative-box">
+                                <h5>5-Round Imagination Protocol</h5>
+                                
+                                <p><strong>Round 1:</strong> Imagine activity with fear (note symptoms)</p>
+                                <p><strong>Round 2:</strong> Imagine with less fear, more neutral (note changes)</p>
+                                <p><strong>Round 3:</strong> Imagine with calm confidence (note changes)</p>
+                                <p><strong>Round 4:</strong> Imagine with actual enjoyment (note changes)</p>
+                                <p><strong>Round 5:</strong> Imagine with joy and gratitude for your body (note changes)</p>
+                                
+                                <p style="margin-top: 15px;"><strong>Between each round:</strong> "My brain is learning this is safe. Each repetition builds new pathways."</p>
+                            </div>
+                            
+                            <p><strong>Record results:</strong> "Started at __/10 symptoms, ended at __/10. This is proof of rewiring!"</p>
+                            
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="day19-systematic">
+                                <label for="day19-systematic">Completed 5-round protocol</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-header">
+                            <span class="exercise-title">Endo Amplification Check</span>
+                            <span class="exercise-time">10 min</span>
+                        </div>
+                        <div class="exercise-content">
+                            <p><strong>Rate these separately in your journal:</strong></p>
+                            
+                            <ul>
+                                <li>What I think is pure endo symptoms (cramping, specific spots): __/10</li>
+                                <li>What feels like amplification (spreading, moving, emotional triggers): __/10</li>
+                                <li>Total pain experience: __/10</li>
+                            </ul>
+                            
+                            <p style="margin-top: 15px;"><strong>Write:</strong> "If I could reduce just the amplification part by 50%, my pain would go from __/10 to __/10. This would mean I could _______ [list activities you could do]."</p>
+                            
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="day19-endo">
+                                <label for="day19-endo">Completed endo amplification assessment</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="special-note">
+                    <h5>🎯 Almost Ready for Physical Practice!</h5>
+                    <p>You've been systematically retraining your brain through imagination. Tomorrow, you'll take the brave step of tiny physical exposures. Your nervous system is prepared!</p>
+                </div>
+            </div>
+            
+            <!-- Day 20 -->
+            <div class="day-card" id="day20">
+                <div class="day-header">
+                    <span class="day-title">Day 20: First Tiny Physical Exposure</span>
+                    <span class="day-date">Week 3, Day 6</span>
+                </div>
+                
+                <div class="day-theme">
+                    <h4>Today's Focus: From Imagination to Reality - Baby Steps</h4>
+                    <p>The bridge from mental to physical reconditioning.</p>
+                </div>
+                
+                <div class="education-section">
+                    <h4>📚 Graded Exposure: The Gold Standard</h4>
+                    <p>By starting with tiny exposures and gradually increasing, you give your brain hundreds of corrective experiences. Each time you do a feared activity without catastrophe, neural pathways rewire. Start so small that success is guaranteed.</p>
+                    
+                    <div class="key-concept">
+                        <strong>Success Redefined:</strong> Success is NOT being pain-free during exposure. Success is doing it despite sensations, teaching your brain that the activity itself is safe. Symptoms may arise - that's okay. You're teaching your brain they're not dangerous.
+                    </div>
+                </div>
+                
+                <div class="exercises-section">
+                    <h4>Today's Exercises</h4>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-header">
+                            <span class="exercise-title">Pre-Exposure Preparation</span>
+                            <span class="exercise-time">10 min</span>
+                        </div>
+                        <div class="exercise-content">
+                            <p><strong>Choose your tiny exposure (30 seconds to 1 minute max!):</strong></p>
+                            
+                            <ul>
+                                <li>Sitting in a chair for 30 seconds</li>
+                                <li>Walking 10-20 steps</li>
+                                <li>Gentle pelvic tilt for 10 seconds</li>
+                                <li>Standing for 1 minute</li>
+                                <li>Climbing 3 stairs</li>
+                            </ul>
+                            
+                            <p style="margin-top: 15px;"><strong>Write your commitment:</strong> "I will do [activity] for [duration] to teach my brain it's safe. If symptoms arise, I'll remind myself they're not dangerous. Success is doing it, not being symptom-free."</p>
+                            
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="day20-prep">
+                                <label for="day20-prep">Prepared for exposure</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-header">
+                            <span class="exercise-title">The Physical Exposure</span>
+                            <span class="exercise-time">10 min</span>
+                        </div>
+                        <div class="exercise-content">
+                            <div class="provocative-box" style="background: linear-gradient(135deg, #d4edda, #c3e6cb); border-color: #28a745;">
+                                <h5 style="color: #155724;">Your Brave Moment</h5>
+                                
+                                <p><strong>Step 1: Imagine it going well (1 min)</strong></p>
+                                <p>See yourself doing it comfortably</p>
+                                
+                                <p><strong>Step 2: Set intention</strong></p>
+                                <p>"I'm doing this to rewire my brain, not to test my pain"</p>
+                                
+                                <p><strong>Step 3: DO IT! (30 sec - 1 min)</strong></p>
+                                <ul>
+                                    <li>Focus on: "I'm teaching my brain this is safe"</li>
+                                    <li>If symptoms arise: "Hello symptoms, you can't hurt me"</li>
+                                    <li>Breathe normally, don't brace</li>
+                                </ul>
+                                
+                                <p><strong>Step 4: Celebrate immediately!</strong></p>
+                                <p>"I DID IT! My brain is learning!"</p>
+                                
+                                <p><strong>Step 5: Track aftermath</strong></p>
+                                <ul>
+                                    <li>How do you feel emotionally? (proud? scared? excited?)</li>
+                                    <li>What are symptoms doing? (same? more? less?)</li>
+                                    <li>Remember: Any outcome is good data</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="day20-exposure">
+                                <label for="day20-exposure">COMPLETED MY FIRST PHYSICAL EXPOSURE!</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-header">
+                            <span class="exercise-title">Integration & Emotional Processing</span>
+                            <span class="exercise-time">15 min</span>
+                        </div>
+                        <div class="exercise-content">
+                            <p><strong>Journal about this huge milestone:</strong></p>
+                            
+                            <ol>
+                                <li>What emotions came up during exposure?</li>
+                                <li>Did the catastrophe you imagined happen?</li>
+                                <li>What did your "protector" (pain) do?</li>
+                                <li>How is this evidence your brain can change?</li>
+                                <li>What would you tell someone else attempting this?</li>
+                            </ol>
+                            
+                            <p style="margin-top: 15px;"><strong>If symptoms increased:</strong> "This is normal! My brain is testing the new pattern. With repetition, it will learn."</p>
+                            
+                            <p><strong>If symptoms stayed same/decreased:</strong> "My brain is already learning! This will get easier each time."</p>
+                            
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="day20-integration">
+                                <label for="day20-integration">Processed the exposure experience</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="success-story-box">
+                    <h5>🏆 MASSIVE ACHIEVEMENT!</h5>
+                    <p>You just did your first physical exposure! This is the beginning of reclaiming your life. Every great recovery started with one tiny, brave exposure just like yours.</p>
+                </div>
+            </div>
+            
+            <!-- Day 21 -->
+            <div class="day-card" id="day21">
+                <div class="day-header">
+                    <span class="day-title">Day 21: Integration & Evidence Review</span>
+                    <span class="day-date">Week 3, Day 7</span>
+                </div>
+                
+                <div class="day-theme">
+                    <h4>Today's Focus: Consolidating Your Breakthroughs</h4>
+                    <p>Celebrating massive progress and preparing for continued healing.</p>
+                </div>
+                
+                <div class="education-section">
+                    <h4>📚 What You've Proven This Week</h4>
+                    <p>You've gathered undeniable evidence that your brain generates and amplifies pain. You've shown that imagination creates symptoms, emotions trigger physical responses, and your pain is trying to protect you. Most importantly, you've started rewiring these patterns through safe exposure.</p>
+                    
+                    <div class="key-concept">
+                        <strong>The Path Forward:</strong> Recovery isn't linear. Some days will be harder. That's not failure - it's your brain testing whether you're really safe. Each time you respond with calm confidence instead of fear, the new pathways strengthen.
+                    </div>
+                </div>
+                
+                <div class="exercises-section">
+                    <h4>Today's Exercises</h4>
+                    
+                    <div class="exercise-item">
+                        <div class="exercise-header">
+                            <span class="exercise-title">Complete Evidence File</span>
+                            <span class="exercise-time">20 min</span>
+                        </div>
+                        <div class="exercise-content">
+                            <p><strong>Write your comprehensive evidence list:</strong></p>
+                            
+                            <div style="background: #f0f8ff; padding: 20px; border-radius: 10px;">
+                                <h5 style="color: #004085;">My Neuroplastic Pain Evidence</h5>
+                                
+                                <p><strong>From Week 1:</strong></p>
+                                <ul>
+                                    <li>□ Pain varies without structural reason</li>
+                                    <li>□ Stress makes it worse</li>
+                                    <li>□ Started during emotional period</li>
+                                </ul>
+                                
+                                <p style="margin-top: 15px;"><strong>From Week 2:</strong></p>
+                                <ul>
+                                    <li>□ Can observe sensations without catastrophe</li>
+                                    <li>□ Identified conditioned triggers</li>
+                                    <li>□ Emotions instantly create physical sensations</li>
+                                </ul>
+                                
+                                <p style="margin-top: 15px;"><strong>From Week 3:</strong></p>
+                                <ul>
+                                    <li>□ Imagination alone creates symptoms</li>
+                                    <li>□ Different emotions = different symptoms</li>
+                                    <li>□ Pain told me what it's protecting</li>
+                                    <li>□ Did feared activity and survived</li>
+                                    <li>□ Symptoms change based on thoughts</li>
+                                </ul>
+                            </div>
+                            
+                 10px;"><strong>Think of someone who frustrates you</strong>
+                                    <br>→ Immediately notice: What happened in pelvis?</li>
+                                <li style="margin-top: 10px;"><strong>Shake it off</strong> - literally move your body</li>
+                                <li style="margin-top:
